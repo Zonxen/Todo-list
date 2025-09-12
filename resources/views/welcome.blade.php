@@ -18,9 +18,8 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body
-    class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">
-    <header class="w-full lg:max-w-4xl max-w-[335px] text-sm mb-6 not-has-[nav]:hidden">
+<body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center flex-col">
+    <header class="w-full lg:max-w-4xl max-w-[335px] text-sm mb-12 not-has-[nav]:hidden">
         @if (Route::has('login'))
             <nav class="flex items-center justify-end gap-4">
                 @auth
@@ -45,14 +44,22 @@
         @endif
     </header>
 
-    <div>
-        <h1 class="text-3xl font-bold">Sharing Something</h1>
-        @foreach ($posts as $post)
-            <div class="bg-white p-4 rounded shadow-md mb-4">
-                <h1>{{ $post->title }}</h1>
-                <p>{{ $post->content }}</p>
-            </div>
-        @endforeach
+    <div class="flex flex-col min-h-screen">
+        <h1 class="text-3xl font-bold mb-4 text-left">Sharing Something</h1>
+        <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
+            @foreach ($posts as $post)
+                <div class="bg-white p-4 rounded shadow-md mb-4">
+                    <h1 class="text-2xl font-semibold mb-2">{{ $post->title }}</h1>
+                    <p>{{ Str::limit($post->content, 200) }}</p>
+
+                    @auth
+                        <p>- {{ $post->user->name }}</p>
+                    @endauth
+                    <a class="text-blue-500" href="{{ route('posts.show', $post) }}">Read more</a>
+                </div>
+            @endforeach
+        </div>
+
     </div>
 
     @if (Route::has('login'))
