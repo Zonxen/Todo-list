@@ -45,14 +45,15 @@
     </header>
 
     <div class="flex flex-col min-h-screen max-w-5xl">
-        <h1 class="text-3xl font-bold mb-4 text-left">{{ $post->title }}</h1>
-        <ul class="flex gap-3 text-end">
-            {{-- pokoknya mau dibuat mentok di kanan gitu, dibawah judul --}}
-            <li>- </li>
-            <li class="font-medium">{{ $post->user->name }}</li>
-            <li class="text-slate-700">{{ $post->created_at->format('M d, Y') }}</li>
-        </ul>
-        <p>{{ $post->content }}</p>
+        <a href="{{ route('home') }}"> <- Back</a>
+                <h1 class="text-3xl font-bold mb-4 text-left">{{ $post->title }}</h1>
+                <ul class="flex gap-3 text-end">
+                    {{-- pokoknya mau dibuat mentok di kanan gitu, dibawah judul --}}
+                    <li>- </li>
+                    <li class="font-medium">{{ $post->user->name }}</li>
+                    <li class="text-slate-700">{{ $post->created_at->format('M d, Y') }}</li>
+                </ul>
+                <p>{{ $post->content }}</p>
     </div>
 
     @if (Route::has('login'))
