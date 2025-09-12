@@ -49,8 +49,8 @@
         <ul class="flex gap-3 text-end">
             {{-- pokoknya mau dibuat mentok di kanan gitu, dibawah judul --}}
             <li>- </li>
-            <li class="font-medium">{{$post->user->name}}</li>
-            <li class="text-slate-700">{{$post->created_at->format('M d, Y')}}</li>
+            <li class="font-medium">{{ $post->user->name }}</li>
+            <li class="text-slate-700">{{ $post->created_at->format('M d, Y') }}</li>
         </ul>
         <p>{{ $post->content }}</p>
     </div>
