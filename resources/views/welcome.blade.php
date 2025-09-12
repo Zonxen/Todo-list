@@ -19,7 +19,7 @@
 </head>
 
 <body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center flex-col">
-    <header class="w-full lg:max-w-4xl max-w-[335px] text-sm mb-12 not-has-[nav]:hidden">
+    <header class="w-full lg:max-w-7xl max-w-[335px] text-sm mb-12 not-has-[nav]:hidden">
         @if (Route::has('login'))
             <nav class="flex items-center justify-end gap-4">
                 @auth
@@ -44,7 +44,7 @@
         @endif
     </header>
 
-    <div class="flex flex-col min-h-screen">
+    <div class="flex flex-col min-h-screen max-w-7xl">
         <h1 class="text-3xl font-bold mb-4 text-left">Sharing Something</h1>
         <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
             @foreach ($posts as $post)
