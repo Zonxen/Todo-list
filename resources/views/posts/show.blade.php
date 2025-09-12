@@ -45,7 +45,7 @@
     </header>
 
     <div class="flex flex-col min-h-screen max-w-5xl">
-        <a href="{{ route('home') }}"> <- Back</a>
+        <a class="underline mb-4 hover:text-slate-700" href="{{ route('home') }}"> <- Back to home</a>
                 <h1 class="text-3xl font-bold mb-4 text-left">{{ $post->title }}</h1>
                 <ul class="flex gap-3 text-end">
                     {{-- pokoknya mau dibuat mentok di kanan gitu, dibawah judul --}}
