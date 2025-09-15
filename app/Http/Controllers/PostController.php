@@ -21,7 +21,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('posts.create');
     }
 
     /**
@@ -29,7 +29,20 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Cara ini bisa digunakan dan lebih simple.. namun kurang aman karena tidak menggunakan sistem validasi.
+        // Post::create([
+        //     'title' => $request->title,
+        //     'content'=>$request->content,
+        //     'user_id'=>$request->user()->id
+        // ]);
+
+        $validated = request()->validate([
+            "title" => "required|string|max:255",
+            "content" => "required|string"
+        ]);
+        $request->user()->posts()->create($validated);
+
+        return redirect()->route('home')->with('success', 'Note created successfully!');
     }
 
     /**
