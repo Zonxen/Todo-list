@@ -1,13 +1,18 @@
 <?php
 
-use App\Http\Controllers\PostController;
-use Illuminate\Support\Facades\Route;
+use App\Models\Post;
 use Livewire\Volt\Volt;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
 
 Route::get('/', [PostController::class, 'index'])->name('home');
+Route::view('/intidaya', 'intidayamandiri');
 Route::resource('posts', PostController::class)->except(['index']);
 
-Route::view('dashboard', 'dashboard')
+Route::get('dashboard', function () {
+    $posts = Post::latest()->get();
+    return view('dashboard', compact('posts'));
+})
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 

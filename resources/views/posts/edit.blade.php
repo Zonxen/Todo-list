@@ -43,16 +43,17 @@
     </header>
 
     <div class="flex flex-col min-h-screen w-full max-w-5xl">
-        <form class="gap-4 flex flex-col" method="POST" action="{{ route('posts.store') }}">
+        <form class="gap-4 flex flex-col" method="POST" action="{{ route('posts.update', $post) }}">
             @csrf
+            @method('PUT')
 
             <div>
-                <input class="lg:text-5xl md:text-2xl text-2xl font-medium font-serif" type="text" name="title"
+                <input class="lg:text-5xl md:text-2xl text-2xl font-medium font-serif" type="text" name="title" value="{{old('title', $post->title)}}"
                     placeholder="Title" required>
             </div>
             <div>
                 <textarea contenteditable="true" class="mt-4 text-xl font-serif w-full h-auto resize-none field-sizing-content" type="text"
-                    name="content" placeholder="Tell your story..." required></textarea>
+                    name="content" required>{{old('content', $post->content)}}</textarea>
             </div>
             <div>
                 <button type="submit">Publish</button>
