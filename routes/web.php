@@ -7,10 +7,17 @@ use App\Http\Controllers\PostController;
 
 Route::get('/', [PostController::class, 'index'])->name('home');
 Route::view('/intidaya', 'intidayamandiri');
-Route::resource('posts', PostController::class)->except(['index']);
+
+// Public: hanya boleh lihat detail post
+Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
+
+// Auth: create, store, edit, update, destroy butuh login
+Route::resource('posts', PostController::class)
+    ->except(['index', 'show'])
+    ->middleware('auth');
 
 Route::get('dashboard', function () {
-    $posts = Post::latest()->get();
+    $posts = auth()->user()->posts()->latest()->get();
     return view('dashboard', compact('posts'));
 })
     ->middleware(['auth', 'verified'])

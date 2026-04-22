@@ -42,7 +42,7 @@ class PostController extends Controller
         ]);
         $request->user()->posts()->create($validated);
 
-        return redirect()->route('home')->with('success', 'Note created successfully!');
+        return redirect()->route('dashboard')->with('success', 'Post created successfully!');
     }
 
     /**
@@ -83,6 +83,6 @@ class PostController extends Controller
     {
         abort_if(auth()->id() !== $post->user_id, 403);
         $post->delete();
-        return redirect()->route('home')->with('success', 'Post deleted successfully!');
+        return redirect()->route('dashboard')->with('success', 'Post deleted successfully!');
     }
 }
