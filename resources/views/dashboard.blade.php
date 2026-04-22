@@ -41,7 +41,7 @@
                 @foreach ($posts as $post)
                     <div class="p-4 rounded-xl border border-neutral-200 dark:border-neutral-700 flex flex-col gap-2">
                         <h2 class="text-lg font-semibold leading-snug">{{ $post->title }}</h2>
-                        <p class="flex-1 text-sm text-neutral-500">{{ Str::limit($post->content, 160) }}</p>
+                        <p class="flex-1 text-sm text-neutral-500">{{ Str::limit(strip_tags($post->content), 160) }}</p>
                         <p class="text-xs text-neutral-400">{{ $post->created_at->format('M d, Y') }}</p>
 
                         <div class="flex items-center justify-between mt-2">

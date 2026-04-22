@@ -16,6 +16,23 @@
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <!-- Quill styles for rendering rich content -->
+    <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+    <style>
+        /* Render Quill content without the editor chrome */
+        .ql-editor {
+            padding: 0;
+            font-size: 1.125rem;
+            font-family: Georgia, serif;
+            line-height: 1.8;
+            border: none !important;
+        }
+        .ql-container.ql-snow {
+            border: none !important;
+            font-size: inherit;
+        }
+    </style>
 </head>
 
 <body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center flex-col">
@@ -107,10 +124,10 @@
             @endif
         @endauth
 
-        {{-- Post Content --}}
-        <article class="prose dark:prose-invert max-w-none leading-relaxed">
-            {!! nl2br(e($post->content)) !!}
-        </article>
+        {{-- Post Content — rendered as Quill HTML --}}
+        <div class="ql-container ql-snow mt-4">
+            <div class="ql-editor">{!! $post->content !!}</div>
+        </div>
     </div>
 
     <div class="h-14.5 hidden lg:block"></div>
