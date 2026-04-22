@@ -45,21 +45,57 @@
     </header>
 
     <div class="flex flex-col min-h-screen max-w-7xl">
-        <h1 class="text-3xl font-bold mb-4 text-left">Sharing Something</h1>
+        <div class="flex items-center justify-between mb-4">
+            <h1 class="text-3xl font-bold text-left">Sharing Something</h1>
+            @auth
+                <a href="{{ route('posts.create') }}"
+                    class="inline-block px-5 py-1.5 bg-[#1b1b18] text-white dark:bg-white dark:text-[#1b1b18] rounded-sm text-sm leading-normal hover:opacity-80 transition">
+                    + New Post
+                </a>
+            @endauth
+        </div>
+
         <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
             @foreach ($posts as $post)
-                <div class="bg-white p-4 rounded shadow-md mb-4">
-                    <h1 class="text-2xl font-semibold mb-2">{{ $post->title }}</h1>
-                    <p>{{ Str::limit($post->content, 200) }}</p>
+                <div class="bg-white dark:bg-[#1a1a1a] p-4 rounded shadow-md mb-4 flex flex-col gap-2">
+                    <h2 class="text-2xl font-semibold">{{ $post->title }}</h2>
+                    <p class="flex-1">{{ Str::limit($post->content, 200) }}</p>
 
                     @auth
-                        <p>- {{ $post->user->name }}</p>
+                        <p class="text-sm text-slate-500">- {{ $post->user->name }}</p>
                     @endauth
-                    <a class="text-blue-500" href="{{ route('posts.show', $post) }}">Read more</a>
+
+                    <div class="flex items-center justify-between mt-2">
+                        <a class="text-blue-500 text-sm hover:underline" href="{{ route('posts.show', $post) }}">Read more →</a>
+
+                        @auth
+                            @if (auth()->id() === $post->user_id)
+                                <div class="flex gap-2">
+                                    <a href="{{ route('posts.edit', $post) }}"
+                                        class="px-3 py-1 text-xs border border-[#19140035] hover:border-[#1915014a] dark:border-[#3E3E3A] rounded-sm">
+                                        Edit
+                                    </a>
+                                    <form method="POST" action="{{ route('posts.destroy', $post) }}"
+                                        onsubmit="return confirm('Hapus post ini?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="px-3 py-1 text-xs text-red-600 border border-red-200 hover:border-red-400 rounded-sm">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </div>
+                            @endif
+                        @endauth
+                    </div>
                 </div>
             @endforeach
         </div>
 
+        {{-- Pagination --}}
+        <div class="mt-6">
+            {{ $posts->links() }}
+        </div>
     </div>
 
     @if (Route::has('login'))

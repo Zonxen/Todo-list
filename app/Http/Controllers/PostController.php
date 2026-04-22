@@ -58,6 +58,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        abort_if(auth()->id() !== $post->user_id, 403);
         return view('posts.edit', compact('post'));
     }
 
@@ -66,6 +67,7 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        abort_if(auth()->id() !== $post->user_id, 403);
         $validated = request()->validate([
             "title"=>"required|string|max:255",
             "content"=>"required|string"
@@ -77,8 +79,10 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Post $post)
     {
-        //
+        abort_if(auth()->id() !== $post->user_id, 403);
+        $post->delete();
+        return redirect()->route('home')->with('success', 'Post deleted successfully!');
     }
 }

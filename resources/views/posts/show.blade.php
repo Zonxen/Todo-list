@@ -53,7 +53,28 @@
                     <li class="font-medium">{{ $post->user->name }}</li>
                     <li class="text-slate-700">{{ $post->created_at->format('M d, Y') }}</li>
                 </ul>
-                <p>{{ $post->content }}</p>
+
+                @auth
+                    @if (auth()->id() === $post->user_id)
+                        <div class="flex gap-2 mt-3 mb-6">
+                            <a href="{{ route('posts.edit', $post) }}"
+                                class="px-4 py-1.5 text-sm border border-[#19140035] hover:border-[#1915014a] dark:border-[#3E3E3A] rounded-sm">
+                                Edit
+                            </a>
+                            <form method="POST" action="{{ route('posts.destroy', $post) }}"
+                                onsubmit="return confirm('Hapus post ini?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"
+                                    class="px-4 py-1.5 text-sm text-red-600 border border-red-200 hover:border-red-400 rounded-sm">
+                                    Delete
+                                </button>
+                            </form>
+                        </div>
+                    @endif
+                @endauth
+
+                <p class="mt-2">{{ $post->content }}</p>
     </div>
 
     @if (Route::has('login'))
